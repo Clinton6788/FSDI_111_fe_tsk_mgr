@@ -13,9 +13,10 @@
         <div class="collapse" id="descCollapse-{{ task['id'] }}">
             <p>{{ task["description"] }}</p>
             <a class="btn btn-sm btn-secondary" data-bs-toggle="collapse" href="#editForm-{{ task['id'] }}" role="button" aria-expanded="false" aria-controls="editForm-{{ task['id'] }}">Edit</a>
-            <a class="btn btn-sm btn-danger" href="{{ url_for('delete_task', pk=task['id']) }}">Delete</a>
+            <form method="post" action="{{ url_for('delete_task', pk=task['id']) }}">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
             
-            <!-- Inline edit form -->
             <div class="collapse mt-3" id="editForm-{{ task['id'] }}">
                 <form method="post" action="{{ url_for('edit_task', pk=task['id']) }}">
                     <div class="mb-3">

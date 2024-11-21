@@ -4,6 +4,7 @@ from flask import(
     render_template
 )
 import requests
+import time
 
 BACKEND_URL = "http://127.0.0.1:5000/tasks"
 app = Flask(__name__)
@@ -50,13 +51,16 @@ def edit_task(pk):
         response.status_code
     )
 
-@app.delete("/tasks/<int:pk>/")
+@app.post("/tasks/delete/<int:pk>/")
 def delete_task(pk):
     url = "%s/%s" % (BACKEND_URL, pk)
     response = requests.delete(url)
     if response.status_code == 204:
-        return render_template("success.html", message="Task deletion successful")
+        render_template("success.html", message="Task deletion successful")
+        time.sleep(2)
+        return render_template("list.html")
     return(
         render_template("error.html", err_code=response.status_code),
         response.status_code
     )
+
